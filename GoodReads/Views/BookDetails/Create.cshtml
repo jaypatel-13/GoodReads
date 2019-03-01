@@ -1,0 +1,70 @@
+﻿@model GoodReads.Models.BookDetails
+    @if (Session["role"].Equals("admin"))
+    {
+
+using (Html.BeginForm("Create", "BookDetails", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+    <div class="form-horizontal">
+        <h4>BookDetails</h4>
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BookId, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Image of the cover of the book</label>
+            <input type="file" name="image" class="form-control" required/>
+        </div>
+
+        <div class="form-group">
+            <label>PDF of the book</label>
+            <input type="file" name="pdf" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload Book" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+    }
+    else
+{
+    <h3>You are unauthorized to perform this action! </h3>
+        @Html.ActionLink("Read books", "Index", "BookDetails")
+
+
+           }

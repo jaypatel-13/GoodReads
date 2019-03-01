@@ -1,0 +1,67 @@
+﻿@model GoodReads.Models.BookDetails
+<br>
+<br>
+<br>
+<div class="row">
+    @using (Html.BeginForm("Index", "BookDetails", FormMethod.Post))
+    {
+        <div class="col-lg-4">
+            Search by book's name: @Html.TextBox("searchbook", null, new { @class = "form-control" })
+            <input id="submitbook" type="submit" value="Search" class="btn btn-block">
+
+        </div>
+    }
+    @using (Html.BeginForm("Index2", "BookDetails", FormMethod.Post))
+    {
+        <div class="col-lg-4">
+            Search by author's name: @Html.TextBox("searchauthor", null, new { @class = "form-control" })
+            <input id="submitauthor" type="submit" value="Search" class="btn btn-block">
+
+        </div>
+    }
+    @using (Html.BeginForm("Index3", "BookDetails", FormMethod.Post))
+    {
+        <div class="col-lg-4">
+            Search by genre: @Html.TextBox("searchgenre", null, new { @class = "form-control" })
+            <input id="submitgenre" type="submit" value="Search" class="btn btn-block">
+
+        </div>
+    }
+
+</div>
+<br>
+<br>
+<table style="width:100%;" class="table table-hover table-bordered">
+    <thead style="background:black; color:white;">
+        <tr>
+            <th><b>@Html.DisplayNameFor(model => model.BookName)</b></th>
+            <th><b>@Html.DisplayNameFor(model => model.Author)</b></th>
+            <th><b>@Html.DisplayNameFor(model => model.Genre)</b></th>
+            <th><b>Cover</b></th>
+            <th><b>Link to the Book</b></th>
+
+        </tr>
+    </thead>
+    @foreach (var book in ViewBag.Books)
+    {
+
+        <tr>
+            <td>@book.BookName</td>
+            <td>@book.Author</td>
+            <td>@book.Genre</td>
+            <td><a href=@book.Filepath><img src=@book.Imagepath width="150vw" height="150vw" /></a></td>
+            <td>
+                <a href=@book.Filepath class="btn btn-block btn-danger">Read this book</a>
+                @if (Session["role"].Equals("admin"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = book.BookName, @class = "btn btn-block btn-danger" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+@if (Session["role"].Equals("admin"))
+{
+    @Html.ActionLink("Upload a new book", "Create", new { @class = "btn btn-block btn-danger" })
+}
